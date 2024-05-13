@@ -1,10 +1,12 @@
 import { main, footer } from "./data.js";
-import { event } from "./event.js";
-import { createFamily, createTodos, todoFooter } from "./dom.js";
-import { getHash, handleURLChange } from "./route.js";
-import Router from "./route.js";
-import { deleteCompleted, filterByClass, updateClassById } from "./update.js";
-import { uuid } from "./utils.js";
+import { event } from "./core/event.js";
+import { createFamily } from "./core/dom.js";
+import { todoFooter } from "./components/TodoFooter.js";
+import { createTodos } from "./components/TodoItem.js";
+import { getHash } from "./core/route.js";
+import Router from "./core/route.js";
+import { filterByClass, updateClassById, deleteCompleted } from "./core/state.js";
+import { uuid } from "./utils/helpers.js"
 
 // Router initialisation
 const initRouter = () => {
@@ -272,4 +274,5 @@ function updateContent(id, content) {
       todo.content = content;
     }
   });
+  maj();
 }
