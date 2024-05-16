@@ -22,29 +22,94 @@ To start using our Mini-Framework, follow these steps:
 
     Start building your application by leveraging the features provided by the framework.
 
-## Code Examples
-### Creating an Element
+## Creating an Element
+The createElement() function is used to create a new HTML element with specified attributes and optionally text content, and then append it to the DOM.
+### Syntax:
 
 ```javascript
-const container = MiniFramework.createElement('div', { class: 'container' });
+createElement(tagName, attributes, textContent);
+```
+- tagName (string): The name of the HTML tag of the element to create (e.g., 'div', 'button', 'span', etc.).
+- attributes (object): An object containing the attributes to set for the element (e.g., { class: 'container', id: 'myContainer' }).
+- textContent (string): The text content to display inside the element, optional.
+### Code Example
+```javascript
+const container = createElement('div', { class: 'container' });
 document.body.appendChild(container);
 ```
 
-### Creating an Event
+## Creating an Event
+
+To add an event listener to an element using our MiniFramework, you can use the event() function. This function takes three parameters:
+
+- Event Type:
+Specify the type of event you want to listen for (e.g., 'click', 'mouseover', 'keydown', etc.).
+
+- Element:
+Provide the element to which you want to attach the event listener.
+
+- Callback Function:
+Define the callback function to be executed when the specified event occurs.
+
+### Syntax:
+
+```javascript
+event(eventType, element, callback);
+```
+- eventType (string): The type of event to listen for (e.g., 'click', 'mouseover', etc.).
+- element (HTMLElement): The HTML element to which the event listener will be attached.
+- callback (function): The function to be called when the event is triggered.
+
+### Code Example
 
 ```javascript
 // Création du bouton
-const button = MiniFramework.createElement('button', { id: 'myButton' }, 'Click Me');
+const button = createElement('button', { id: 'myButton' }, 'Click Me');
 container.appendChild(button);
 
 // Ajout de l'événement au bouton
-MiniFramework.event('click', button, () => {
+event('click', button, () => {
     console.log('Button clicked!');
 });
 ```
-### Nesting Elements
+
+Another way to create events in our framework is by adding event attributes with the "on" prefix to our HTML elements. Here's how you can do it:
+### Code Example
 ```javascript
-const parent = MiniFramework.createFamily({
+
+// Creating the button with the onclick event attribute
+const button = createElement('button', { 
+    id: 'myButton',
+    onclick: () => {
+        console.log('Button clicked!');
+    }
+}, 'Click Me');
+
+container.appendChild(button);
+```
+
+In this example:
+
+    We add an onclick attribute to the button during its creation.
+    When the button is clicked, the function associated with onclick is executed, logging "Button clicked!" to the console.
+
+This method provides a simple and concise alternative for adding events to our HTML elements in our framework.
+## Nesting Elements
+
+In our MiniFramework, you can nest multiple HTML elements within a parent element using the createFamily() function. This function allows you to create a hierarchical structure of HTML elements by specifying parent-child relationships.
+### Syntax:
+
+```javascript
+createFamily(elementData);
+```
+- elementData (object): An object representing the parent element and its children. It contains the following properties:
+    - tag (string): The HTML tag of the parent element (e.g., 'div', 'section', etc.).
+    - attrs (object): An object containing the attributes to set for the parent element (e.g., { class: 'parent' }).
+    - children (array): An array of child element objects, each representing a child element to be nested within the parent element.
+    - textContent (string, optional): The text content of the parent element.
+
+```javascript
+const parent = createFamily({
     tag: "div",
     attrs: {
         class: "parent"
@@ -69,7 +134,7 @@ const parent = MiniFramework.createFamily({
 ### Adding Attributes to an Element
 
 ```javascript
-const input = MiniFramework.createElement('input', { type: 'text', placeholder: 'Enter your name' });
+const input = createElement('input', { type: 'text', placeholder: 'Enter your name' });
 ```
 
 ## Routing System
@@ -119,7 +184,7 @@ const routes = [
     path: '/',
     component: () => {
       // Logic for rendering the home page
-      const homePage = MiniFramework.createElement('div', {}, 'Home Page');
+      const homePage = createElement('div', {}, 'Home Page');
       document.body.appendChild(homePage);
     }
   },
@@ -127,7 +192,7 @@ const routes = [
     path: '/about',
     component: () => {
       // Logic for rendering the about page
-      const aboutPage = MiniFramework.createElement('div', {}, 'About Page');
+      const aboutPage = createElement('div', {}, 'About Page');
       document.body.appendChild(aboutPage);
     }
   },
